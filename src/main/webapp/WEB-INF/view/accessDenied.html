@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="|${pageName}|"></title>
+</head>
+<body>
+<script th:inline="javascript">
+  window.onload = function (){
+    var nextPage = [[@{__${nextPage}__}]], msg=[[${msg}]];
+    if (nextPage){
+      alert(msg);
+      location.href = nextPage;
+    } else {
+      location.href = [[@{/security-login/login}]];
+    }
+  }
+</script>
+<!--<div>-->
+<!--  <h1><a th:href="|/${loginType}|">[[${pageName}]]</a></h1> <hr/>-->
+<!--  <h2>관리자 권한 없음</h2>-->
+<!--  <h3>인가에 실패하였습니다!</h3>-->
+<!--</div>-->
+</body>
+</html>

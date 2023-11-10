@@ -5,7 +5,7 @@ import com.question.solvingQ.dto.ModifyRequest;
 import com.question.solvingQ.dto.RegistRequest;
 import com.question.solvingQ.user.User;
 import com.question.solvingQ.user.UserRole;
-import com.question.solvingQ.user.service.UserService;
+import com.question.solvingQ.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

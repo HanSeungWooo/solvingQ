@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.question.solvingQ.mappers.UserMapper">
+    <select id="selectUserByLoginId" parameterType="String" resultType="com.question.solvingQ.user.User">
+        select *
+        from user
+        where login_id = #{loginId}
+    </select>
+
+    <select id="selectUserByNickname" parameterType="String" resultType="com.question.solvingQ.user.User">
+        select *
+        from user
+        where nickname = #{nickname}
+    </select>
+
+    <select id="selectAllUser" resultType="com.question.solvingQ.user.User">
+        select *
+        from user
+    </select>
+
+    <insert id="insertUser" parameterType="com.question.solvingQ.dto.RegistRequest">
+        insert into user (password, nickname, role, login_id)
+        values (#{password}, #{nickname}, #{role}, #{login_id})
+    </insert>
+
+    <update id="updateUser" parameterType="com.question.solvingQ.dto.ModifyRequest">
+        update
+            user
+        set
+            password = #{password},
+            nickname = #{nickname},
+            role = #{role}
+        where
+            login_id = #{loginId}
+    </update>
+</mapper>

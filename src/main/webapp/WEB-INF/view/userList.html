@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="|${pageName}|"></title>
+<!--  <script type="text/javascript">-->
+<!--    function fnDeleteUser(btn){-->
+<!--      if (confirm("정말 삭제하시겠습니까?")){-->
+<!--        const targetIdx = btn.id.split("-")[1];-->
+<!--        const loginId = document.getElementById("loginId-"+targetIdx).textContent;-->
+<!--        -->
+<!--        var form = document.createElement("form")-->
+<!--        form.setAttribute("method", "post")-->
+<!--        form.setAttribute("action", document.getElementById("main").getAttribute("href")+"/delete")-->
+<!--        var id = document.createElement("input")-->
+<!--        id.setAttribute("type", "hidden")-->
+<!--      }-->
+<!--    }-->
+<!--  </script>-->
+</head>
+<body>
+  <h1><a id="main" th:href="|/${loginType}|">[[${pageName}]]</a></h1> <hr/>
+  <h2>사용자 목록</h2>
+  <h3 th:if="${totalCnt == '0'}">조회된 사용자가 없습니다.</h3>
+  <table th:unless="${totalCnt == '0'}" border="1px solid black">
+    <tr>
+      <th>순번</th>
+      <th>로그인 아이디</th>
+      <th>패스워드</th>
+      <th>닉네임</th>
+      <th>권한</th>
+      <th>수정</th>
+      <th>삭제</th>
+    </tr>
+    <tr th:each="user, idx : ${userList}">
+      <td th:id="|idx-${idx.count}|" th:text="${idx.count}"></td>
+      <td th:id="|loginId-${idx.count}|" th:text="${user.loginId}"></td>
+      <td th:id="|password-${idx.count}|" th:text="${user.password}"></td>
+      <td th:id="|nickname-${idx.count}|" th:text="${user.nickname}"></td>
+      <td th:id="|role-${idx.count}|" th:text="${user.role}"></td>
+      <td><button th:if="${loginUser.role.name() == 'ADMIN'}"
+                  th:onclick="|location.href='@{/{loginType}/modify/{id} (loginType=${loginType}, id=${user.loginId})}'|">수정</button>
+      </td>
+      <td>
+        <form th:if="${loginUser.role.name() == 'ADMIN'}" th:method="post" th:action="|@{/{loginType}/delete/{id} (loginType=${loginType}, id=${user.loginId})}|">
+          <button type="submit">삭제</button>
+        </form>
+      </td>
+    </tr>
+  </table>
+  <br/>
+  <p th:text="|총 ${totalCnt}명|"></p>
+  <form th:method="get" th:action="|@{/{loginType}/regist (loginType=${loginType})}|">
+    <button type="submit" th:if="${loginUser.role.name() == 'ADMIN'}" >사용자 등록</button>
+  </form>
+</body>
+</html>
