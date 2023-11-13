@@ -17,7 +17,7 @@
     <button th:onclick="|location.href='@{/{loginType}/info (loginType=${loginType})}'|">유저 정보</button> <br/><br/>
     <button th:onclick="|location.href='@{/{loginType}/admin (loginType=${loginType})}'|">관리자 페이지</button> <br/><br/>
     <button th:onclick="|location.href='@{/{loginType}/logout (loginType=${loginType})}'|">로그아웃</button> <br/><br/>
-    <form th:method="post" th:action="@{/{loginType}/list (loginType=${loginType})}">
+    <form th:method="post" th:action="@{/{loginType}/admin/list (loginType=${loginType})}">
 <!--      <input type="hidden" th:value="${role}">-->
       <button type="submit">사용자 목록 조회</button>
     </form>

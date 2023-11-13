@@ -15,7 +15,6 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class UserService {
-
     private final UserMapper userMapper;
 
     // Spring Security를 활용한 로그인 구현 시 사용

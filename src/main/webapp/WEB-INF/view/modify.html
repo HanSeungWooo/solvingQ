@@ -9,7 +9,7 @@
 <div>
     <h1><a th:href="|/${loginType}|">[[${pageName}]]</a></h1> <hr/>
     <h2>사용자 정보 수정</h2>
-    <form th:method="post" th:action="|@{/{loginType}/modify/{loginId} (loginType=${loginType}, loginId=${modifyRequest.loginId})}|" th:object="${modifyRequest}">
+    <form th:method="post" th:action="|@{/{loginType}/admin/modify/{loginId} (loginType=${loginType}, loginId=${modifyRequest.loginId})}|" th:object="${modifyRequest}">
         <div>
             <input type="hidden" th:field="*{id}"/>
         </div>

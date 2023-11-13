@@ -24,7 +24,7 @@ public class AdminController {
     private final UserService userService;
     private final AdminService adminService;
 
-    @GetMapping("/")
+    @GetMapping({"", "/"})
     public String adminPage(Model model){
         model.addAttribute("loginType", "security-login");
         model.addAttribute("pageName", "Security 로그인");
@@ -126,7 +126,7 @@ public class AdminController {
         }
 
         adminService.modify(modifyRequest);
-        return "list";
+        return "redirect:/security-login";
     }
 
 //    @GetMapping("/history")

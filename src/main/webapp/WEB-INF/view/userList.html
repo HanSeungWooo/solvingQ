@@ -40,10 +40,10 @@
       <td th:id="|nickname-${idx.count}|" th:text="${user.nickname}"></td>
       <td th:id="|role-${idx.count}|" th:text="${user.role}"></td>
       <td><button th:if="${loginUser.role.name() == 'ADMIN'}"
-                  th:onclick="|location.href='@{/{loginType}/modify/{id} (loginType=${loginType}, id=${user.loginId})}'|">수정</button>
+                  th:onclick="|location.href='@{/{loginType}/admin/modify/{id} (loginType=${loginType}, id=${user.loginId})}'|">수정</button>
       </td>
       <td>
-        <form th:if="${loginUser.role.name() == 'ADMIN'}" th:method="post" th:action="|@{/{loginType}/delete/{id} (loginType=${loginType}, id=${user.loginId})}|">
+        <form th:if="${loginUser.role.name() == 'ADMIN'}" th:method="post" th:action="|@{/{loginType}/admin/delete/{id} (loginType=${loginType}, id=${user.loginId})}|">
           <button type="submit">삭제</button>
         </form>
       </td>
@@ -51,7 +51,7 @@
   </table>
   <br/>
   <p th:text="|총 ${totalCnt}명|"></p>
-  <form th:method="get" th:action="|@{/{loginType}/regist (loginType=${loginType})}|">
+  <form th:method="get" th:action="|@{/{loginType}/admin/regist (loginType=${loginType})}|">
     <button type="submit" th:if="${loginUser.role.name() == 'ADMIN'}" >사용자 등록</button>
   </form>
 </body>
