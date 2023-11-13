@@ -9,7 +9,7 @@
 <div>
   <h1><a th:href="|/${loginType}|">[[${pageName}]]</a></h1> <hr/>
   <h2>사용자 등록</h2>
-  <form th:method="post" th:action="|@{/{loginType}/regist (loginType=${loginType})}|" th:object="${registRequest}">
+  <form th:method="post" th:action="|@{/{loginType}/admin/regist (loginType=${loginType})}|" th:object="${registRequest}">
     <div>
       <label th:for="loginId">로그인 아이디 : </label>
       <input type="text" th:field="*{loginId}" th:errorclass="error-input"/>

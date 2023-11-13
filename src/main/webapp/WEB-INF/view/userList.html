@@ -4,20 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <title th:text="|${pageName}|"></title>
-<!--  <script type="text/javascript">-->
-<!--    function fnDeleteUser(btn){-->
-<!--      if (confirm("정말 삭제하시겠습니까?")){-->
-<!--        const targetIdx = btn.id.split("-")[1];-->
-<!--        const loginId = document.getElementById("loginId-"+targetIdx).textContent;-->
-<!--        -->
-<!--        var form = document.createElement("form")-->
-<!--        form.setAttribute("method", "post")-->
-<!--        form.setAttribute("action", document.getElementById("main").getAttribute("href")+"/delete")-->
-<!--        var id = document.createElement("input")-->
-<!--        id.setAttribute("type", "hidden")-->
-<!--      }-->
-<!--    }-->
-<!--  </script>-->
+  <script type="text/javascript">
+    function fnDeleteUser(idx){
+      if (confirm("정말 삭제하시겠습니까?")){
+        document.getElementById("deleteForm-"+idx).submit();
+      }
+    }
+  </script>
 </head>
 <body>
   <h1><a id="main" th:href="|/${loginType}|">[[${pageName}]]</a></h1> <hr/>
@@ -43,8 +36,10 @@
                   th:onclick="|location.href='@{/{loginType}/admin/modify/{id} (loginType=${loginType}, id=${user.loginId})}'|">수정</button>
       </td>
       <td>
-        <form th:if="${loginUser.role.name() == 'ADMIN'}" th:method="post" th:action="|@{/{loginType}/admin/delete/{id} (loginType=${loginType}, id=${user.loginId})}|">
-          <button type="submit">삭제</button>
+        <form th:if="${loginUser.role.name() == 'ADMIN'}" th:method="post" th:id="|deleteForm-${idx.count}|"
+              th:action="|@{/{loginType}/admin/delete (loginType=${loginType}, id=${user.loginId})}|">
+          <input type="hidden" name="loginId" th:value="${user.loginId}"/>
+          <button type="button" th:onclick="|fnDeleteUser(${idx.count})|">삭제</button>
         </form>
       </td>
     </tr>

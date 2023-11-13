@@ -10,7 +10,7 @@
 
     <insert id="insertUser" parameterType="com.question.solvingQ.dto.RegistRequest">
         insert into user (password, nickname, role, login_id)
-        values (#{password}, #{nickname}, #{role}, #{login_id})
+        values (#{password}, #{nickname}, #{role}, #{loginId})
     </insert>
 
     <update id="updateUser" parameterType="com.question.solvingQ.dto.ModifyRequest">
@@ -23,4 +23,10 @@
         where
             login_id = #{loginId}
     </update>
+
+    <delete id="deleteUser" parameterType="String">
+        delete
+        from user
+        where login_id = #{loginId}
+    </delete>
 </mapper>

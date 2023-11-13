@@ -56,4 +56,11 @@ public class AdminService {
     public void modify(ModifyRequest req) {
         adminMapper.updateUser(req);
     }
+
+    /**
+     * 사용자 삭제 기능
+     */
+    public void delete(String loginId){
+        adminMapper.deleteUser(loginId);
+    }
 }

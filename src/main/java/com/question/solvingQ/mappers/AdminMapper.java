@@ -12,4 +12,5 @@ public interface AdminMapper {
     public List<User> selectAllUser();
     public void insertUser(RegistRequest registRequest);
     public void updateUser(ModifyRequest modifyRequest);
+    public void deleteUser(String loginId);
 }

@@ -129,6 +129,16 @@ public class AdminController {
         return "redirect:/security-login";
     }
 
+    @PostMapping("/delete")
+    public String delete(@RequestParam(required = true) String loginId, Model model) {
+        model.addAttribute("loginType", "security-login");
+        model.addAttribute("pageName", "Security 로그인");
+
+        adminService.delete(loginId);
+
+        return "redirect:/security-login";
+    }
+
 //    @GetMapping("/history")
 //    public String search(Model model){
 //        model.addAttribute("loginType", "security-login");
