@@ -13,7 +13,4 @@ import java.util.List;
 public interface UserMapper {
     public User selectUserByLoginId(String loginId);
     public User selectUserByNickname(String nickname);
-    public List<User> selectAllUser();
-    public void insertUser(RegistRequest registRequest);
-    public void updateUser(ModifyRequest modifyRequest);
 }

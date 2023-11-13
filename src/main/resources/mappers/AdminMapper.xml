@@ -3,5 +3,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.question.solvingQ.mappers.AdminMapper">
+    <select id="selectAllUser" resultType="com.question.solvingQ.user.User">
+        select *
+        from user
+    </select>
 
+    <insert id="insertUser" parameterType="com.question.solvingQ.dto.RegistRequest">
+        insert into user (password, nickname, role, login_id)
+        values (#{password}, #{nickname}, #{role}, #{login_id})
+    </insert>
+
+    <update id="updateUser" parameterType="com.question.solvingQ.dto.ModifyRequest">
+        update
+            user
+        set
+            password = #{password},
+            nickname = #{nickname},
+            role = #{role}
+        where
+            login_id = #{loginId}
+    </update>
 </mapper>

@@ -40,26 +40,6 @@ public class UserService {
     }
 
     /**
-     * 사용자 등록 기능 1
-     * 화면에서 JoinRequest(loginId, password, nickname, role)을 입력받아 User로 변환 후 저장
-     * loginId, nickname 중복 체크는 Controller에서 진행 => 에러 메세지 출력을 위해
-     */
-    public void regist(RegistRequest req) {
-        userMapper.insertUser(req);
-    }
-
-    /**
-     * 사용자 등록 기능 2
-     * 화면에서 RegistRequest(loginId, password, nickname, role)을 입력받아 User로 변환 후 저장
-     * 사용자 등록 1과는 달리 비밀번호를 암호화해서 저장
-     * loginId, nickname 중복 체크는 Controller에서 진행 => 에러 메세지 출력을 위해
-     */
-    public void regist2(RegistRequest req) {
-        req.setPassword(passwordEncoder.encode(req.getPassword()));
-        userMapper.insertUser(req);
-    }
-
-    /**
      *  로그인 기능
      *  화면에서 LoginRequest(loginId, password)을 입력받아 loginId와 password가 일치하면 User return
      *  loginId가 존재하지 않거나 password가 일치하지 않으면 null return
@@ -93,22 +73,4 @@ public class UserService {
 
         return user;
     }
-
-    /**
-     * 모든 계정 조회
-     */
-    public List<User> getUserList(){
-        return userMapper.selectAllUser();
-    }
-
-    /**
-     * 사용자 수정 기능
-     * 화면에서 ModifyRequest(loginId, password, nickname, role)을 입력받아 User로 변환 후 저장
-     * 이미 암호화된 password를 가져오므로 password를 암호화하지 않음
-     * loginId, nickname 중복 체크는 Controller에서 진행 => 에러 메세지 출력을 위해
-     */
-    public void modify(ModifyRequest req) {
-        userMapper.updateUser(req);
-    }
-
 }
