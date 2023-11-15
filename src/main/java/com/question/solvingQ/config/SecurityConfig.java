@@ -28,6 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
+                .headers().frameOptions().sameOrigin()
+                    .and()
                 .authorizeRequests()
                     .antMatchers("/security-login/info").authenticated()
                     .antMatchers("/security-login/admin/**").hasAuthority(UserRole.ADMIN.name())
@@ -45,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMe()
                     .rememberMeParameter("remember")
                     .rememberMeServices(rememberMeServices())
-                .and()
+                    .and()
                 .logout()
                     .logoutUrl("/security-login/logout")
                     .invalidateHttpSession(true).deleteCookies("JSESSIONID");

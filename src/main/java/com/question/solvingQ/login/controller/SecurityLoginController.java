@@ -30,7 +30,7 @@ public class SecurityLoginController {
             }
         }
 
-        return "home";
+        return "addNotice";
     }
 
     @GetMapping("/login")
