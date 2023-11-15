@@ -20,7 +20,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/security-login/admin")
 public class AdminController {
-
     private final UserService userService;
     private final AdminService adminService;
 
@@ -32,7 +31,7 @@ public class AdminController {
         return "admin";
     }
 
-    @PostMapping("/list")
+    @GetMapping("/list")
     public String userList(Model model, Authentication auth){
         model.addAttribute("loginType", "security-login");
         model.addAttribute("pageName", "Security 로그인");
@@ -65,31 +64,31 @@ public class AdminController {
         return "regist";
     }
 
-    @PostMapping("/regist")
-    public String regist(@Valid @ModelAttribute RegistRequest registRequest, BindingResult bindingResult, Model model){
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
-
-        // loginId 중복 체크
-        if (userService.checkLoginIdDuplicate(registRequest.getLoginId())){
-            bindingResult.addError(new FieldError("registRequest", "loginId", "로그인 아이디가 중복됩니다."));
-        }
-        // nickname 중복 체크
-        if(userService.checkNicknameDuplicate(registRequest.getNickname())) {
-            bindingResult.addError(new FieldError("registRequest", "nickname", "닉네임이 중복됩니다."));
-        }
-        // password와 passwordCheck가 같은지 체크
-        if(!registRequest.getPassword().equals(registRequest.getPasswordCheck())){
-            bindingResult.addError(new FieldError("registRequest", "passwordCheck", "비밀번호가 일치하지 않습니다."));
-        }
-
-        if (bindingResult.hasErrors()){
-            return "regist";
-        }
-
-        adminService.regist2(registRequest);
-        return "redirect:/security-login";
-    }
+//    @PostMapping("/regist")
+//    public String regist(@Valid @ModelAttribute RegistRequest registRequest, BindingResult bindingResult, Model model){
+//        model.addAttribute("loginType", "security-login");
+//        model.addAttribute("pageName", "Security 로그인");
+//
+//        // loginId 중복 체크
+//        if (userService.checkLoginIdDuplicate(registRequest.getLoginId())){
+//            bindingResult.addError(new FieldError("registRequest", "loginId", "로그인 아이디가 중복됩니다."));
+//        }
+//        // nickname 중복 체크
+//        if(userService.checkNicknameDuplicate(registRequest.getNickname())) {
+//            bindingResult.addError(new FieldError("registRequest", "nickname", "닉네임이 중복됩니다."));
+//        }
+//        // password와 passwordCheck가 같은지 체크
+//        if(!registRequest.getPassword().equals(registRequest.getPasswordCheck())){
+//            bindingResult.addError(new FieldError("registRequest", "passwordCheck", "비밀번호가 일치하지 않습니다."));
+//        }
+//
+//        if (bindingResult.hasErrors()){
+//            return "regist";
+//        }
+//
+//        adminService.regist2(registRequest);
+//        return "redirect:/security-login";
+//    }
 
     @GetMapping("/modify/{id}")
     public String modify(@PathVariable(value = "id") String loginId, Model model){

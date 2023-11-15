@@ -19,20 +19,35 @@
   </form>
 </body>
 <script type="text/javascript">
-  let oEditors = []
+    $(document).ready(function(){
+        smartEditor();
+    });
 
-  smartEditor = function (){
-    console.log("Naver SmartEditor")
-    nhn.husky.EZCreator.createInIFrame({
-      oAppRef: oEditors,
-      elPlaceHolder: "editorTxt",
-      sSkinURI: "/SmartEditor/SmartEditor2Skin.html",
-      fCreator: "createSEditor2"
-    })
-  }
+    let oEditors = [];
 
-  $(document).ready(function(){
-    smartEditor()
-  })
+    smartEditor = function (){
+      console.log("Naver SmartEditor")
+      nhn.husky.EZCreator.createInIFrame({
+        oAppRef: oEditors,
+        elPlaceHolder: "editorTxt",
+        sSkinURI: "/SmartEditor/SmartEditor2Skin.html",
+        fCreator: "createSEditor2"
+      });
+    }
+
+    function sendAjax(url, data, type){
+        $.ajax({
+            type: type,
+            url: url,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            success: function(data){
+
+            },
+            error: function(request, status, error){
+
+            }
+        });
+    }
 </script>
 </html>

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/security-login")
 public class SecurityLoginController {
-
     private final UserService userService;
 
     @GetMapping(value = {"", "/"})
@@ -30,7 +29,7 @@ public class SecurityLoginController {
             }
         }
 
-        return "addNotice";
+        return "home";
     }
 
     @GetMapping("/login")
