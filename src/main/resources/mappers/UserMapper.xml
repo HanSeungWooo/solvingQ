@@ -14,4 +14,11 @@
         from user
         where nickname = #{nickname}
     </select>
+
+    <select id="selectUserByNicknameNotInLoginId" parameterType="String" resultType="com.question.solvingQ.user.User">
+        select *
+        from user
+        where nickname = #{nickname}
+            and login_id != #{loginId}
+    </select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.question.solvingQ.admin;
 
+import com.question.solvingQ.dto.ModifyRequest;
 import com.question.solvingQ.dto.RegistRequest;
 import com.question.solvingQ.exception.*;
 import com.question.solvingQ.user.User;
@@ -44,10 +45,35 @@ public class AdminRestController {
         }
         // password와 passwordCheck가 같은지 체크
         if(!registRequest.getPassword().equals(registRequest.getPasswordCheck())){
-            throw new ApiException(ApiExceptionType.CAN_NOT_INSERT, "비밀번호 재확인이 일치하지 않습니다.");
+            throw new ApiException(ApiExceptionType.CAN_NOT_INSERT, "비밀번호 체크가 일치하지 않습니다.");
         }
 
         adminService.regist2(registRequest);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    /**
+     * 사용자 정보 수정
+     * @param loginId
+     * @param modifyRequest
+     * @param model
+     * @return
+     */
+    @PostMapping("/modify/{id}")
+    public ResponseEntity<?> modify(
+            @PathVariable(value = "id") String loginId,
+            @Valid @RequestBody ModifyRequest modifyRequest,
+            Model model) throws Exception {
+        model.addAttribute("loginType", "security-login");
+        model.addAttribute("pageName", "Security 로그인");
+
+        // nickname 중복 체크
+        if(userService.checkNicknameDuplicate(modifyRequest.getNickname(), loginId)) {
+            throw new ApiException(ApiExceptionType.CAN_NOT_UPDATE, "닉네임이 중복됩니다.");
+        }
+
+        adminService.modify(modifyRequest);
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }

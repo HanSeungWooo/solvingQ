@@ -66,27 +66,27 @@
   function validation(divId){
     var requiredInputs = $('#'+divId+' .essential');
     var requiredRadio = $('#'+divId+' .essential-radio');
-    var hasError = false;
+    var isValid = true;
     if (requiredInputs.length > 0){
-      requiredInputs.toArray().forEach(input => {
-        if (!input.value){
+      $.each(requiredInputs, (idx, input) => {
+        if (input.value.trim() == ''){
           alert($('#'+input.id).data('name')+' 항목은 필수 입력 항목입니다.');
-          hasError = true;
-          return;
+          isValid = false;
+          return false;
         }
       });
     }
     if (requiredRadio.length > 0){
-      var radioNames = requiredRadio.toArray().map(radio => {return radio.name});
-      radioNames.forEach(name => {
-        if ($('input[name='+name+']:checked') == null){
+      var radioNames = requiredRadio.toArray().map(radio => {return radio.name})
+      $.each(radioNames, (idx, name) => {
+        if ($('input[name='+name+']:checked').length == 0){
           alert($('input[name='+name+']').data('name') + ' 항목은 필수 선택 항목입니다.');
-          hasError = true;
-          return;
+          isValid = false;
+          return false;
         }
-      });
+      })
     }
-    return hasError;
+    return isValid;
   }
 
   function sendAjax(url, data, type){

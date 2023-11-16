@@ -17,9 +17,6 @@ import java.util.List;
 public class UserService {
     private final UserMapper userMapper;
 
-    // Spring Security를 활용한 로그인 구현 시 사용
-    private final BCryptPasswordEncoder passwordEncoder;
-
     /**
      * loginId 중복 체크
      * 사용자 등록 기능 구현 시 사용
@@ -36,6 +33,15 @@ public class UserService {
      */
     public boolean checkNicknameDuplicate(String nickname) {
         return userMapper.selectUserByNickname(nickname) != null;
+    }
+
+    /**
+     * nickname 중복 체크2
+     * 사용자 정보 수정 기능 구현 시 사용
+     * 중복되면 true return
+     */
+    public boolean checkNicknameDuplicate(String nickname, String loginId) {
+        return userMapper.selectUserByNicknameNotInLoginId(nickname, loginId) != null;
     }
 
     /**

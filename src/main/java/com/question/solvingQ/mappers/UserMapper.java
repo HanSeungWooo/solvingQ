@@ -13,4 +13,5 @@ import java.util.List;
 public interface UserMapper {
     public User selectUserByLoginId(String loginId);
     public User selectUserByNickname(String nickname);
+    public User selectUserByNicknameNotInLoginId(String nickname, String loginId);
 }
