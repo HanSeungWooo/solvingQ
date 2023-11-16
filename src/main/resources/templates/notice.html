@@ -13,16 +13,20 @@
         <button type="button" id="registNotice">공지사항 작성</button>
     </div>
     <div>
-        <table>
+        <table border="1px solid black">
             <tr>
-                <th>게시물 번호</th>
+                <th>순번</th>
                 <th>제목</th>
                 <th>작성자</th>
                 <th>노출 여부</th>
                 <th>작성일</th>
             </tr>
-            <tr>
-
+            <tr th:each="notice, idx : ${list}">
+                <td th:id="|idx-${list.size() - idx.index}|" th:text="${list.size() - idx.index}"></td>
+                <td th:id="|title-${list.size() - idx.index}|" th:text="${notice.title}"></td>
+                <td th:id="|writerId-${list.size() - idx.index}|" th:text="${notice.writerId}"></td>
+                <td th:id="|showYn-${list.size() - idx.index}|" th:text="${notice.showYn}"></td>
+                <td th:id="|regDate-${list.size() - idx.index}|" th:text="${notice.regDate}"></td>
             </tr>
         </table>
     </div>
@@ -112,7 +116,7 @@
                     "writerId": $('#writerId').val(),
                     "regDate": $('#regDate').val()
                 }
-                url = '/security-login/api/admin/notice/regist';
+                url = '/security-login/api/notice/regist';
                 type = 'post';
 
                 sendAjax(url, data, type);

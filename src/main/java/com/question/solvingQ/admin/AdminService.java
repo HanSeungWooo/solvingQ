@@ -18,7 +18,6 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class AdminService {
-    private final UserMapper userMapper;
     private final AdminMapper adminMapper;
     private final BCryptPasswordEncoder passwordEncoder;
 
@@ -63,12 +62,5 @@ public class AdminService {
      */
     public void delete(String loginId){
         adminMapper.deleteUser(loginId);
-    }
-
-    /**
-     * 공지사항 등록
-     */
-    public void registNotice(NoticeRegistRequest noticeRegistRequest){
-        adminMapper.insertNotice(noticeRegistRequest);
     }
 }

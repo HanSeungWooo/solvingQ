@@ -74,23 +74,4 @@ public class AdminRestController {
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-
-    /**
-     * 공지사항 등록
-     * @param noticeRegistRequest
-     * @param model
-     * @return
-     * @throws Exception
-     */
-    @PostMapping("/notice/regist")
-    public ResponseEntity<?> noticeRegist(
-            @Valid @RequestBody NoticeRegistRequest noticeRegistRequest,
-            Model model) throws Exception {
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
-
-        adminService.registNotice(noticeRegistRequest);
-
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
 }
