@@ -1,17 +1,14 @@
 package com.question.solvingQ.admin;
 
 import com.question.solvingQ.dto.ModifyRequest;
+import com.question.solvingQ.dto.NoticeRegistRequest;
 import com.question.solvingQ.dto.RegistRequest;
 import com.question.solvingQ.exception.*;
-import com.question.solvingQ.user.User;
 import com.question.solvingQ.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -74,6 +71,25 @@ public class AdminRestController {
         }
 
         adminService.modify(modifyRequest);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    /**
+     * 공지사항 등록
+     * @param noticeRegistRequest
+     * @param model
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/notice/regist")
+    public ResponseEntity<?> noticeRegist(
+            @Valid @RequestBody NoticeRegistRequest noticeRegistRequest,
+            Model model) throws Exception {
+        model.addAttribute("loginType", "security-login");
+        model.addAttribute("pageName", "Security 로그인");
+
+        adminService.registNotice(noticeRegistRequest);
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }

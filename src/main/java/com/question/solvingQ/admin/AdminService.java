@@ -1,6 +1,7 @@
 package com.question.solvingQ.admin;
 
 import com.question.solvingQ.dto.ModifyRequest;
+import com.question.solvingQ.dto.NoticeRegistRequest;
 import com.question.solvingQ.dto.RegistRequest;
 import com.question.solvingQ.mappers.AdminMapper;
 import com.question.solvingQ.mappers.UserMapper;
@@ -62,5 +63,12 @@ public class AdminService {
      */
     public void delete(String loginId){
         adminMapper.deleteUser(loginId);
+    }
+
+    /**
+     * 공지사항 등록
+     */
+    public void registNotice(NoticeRegistRequest noticeRegistRequest){
+        adminMapper.insertNotice(noticeRegistRequest);
     }
 }

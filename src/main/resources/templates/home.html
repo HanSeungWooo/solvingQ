@@ -16,6 +16,7 @@
   <div sec:authorize="isAuthenticated()">
     <h3>[[${nickname}]]님 환영합니다!</h3>
     <button th:onclick="|location.href='@{/{loginType}/info (loginType=${loginType})}'|">유저 정보</button> <br/><br/>
+    <button th:onclick="|location.href='@{/{loginType}/notice (loginType=${loginType})}'|">공지사항</button> <br/><br/>
     <button th:onclick="|location.href='@{/{loginType}/admin (loginType=${loginType})}'|">관리자 페이지</button> <br/><br/>
     <button th:onclick="|location.href='@{/{loginType}/logout (loginType=${loginType})}'|">로그아웃</button> <br/><br/>
     <button th:onclick="|location.href='@{/{loginType}/admin/list (loginType=${loginType})}'|">사용자 목록 조회</button>

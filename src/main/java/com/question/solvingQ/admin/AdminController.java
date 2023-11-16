@@ -79,29 +79,6 @@ public class AdminController {
         return "modify";
     }
 
-    @PostMapping("/modify/{id}")
-    public String modify(
-            @PathVariable(value = "id") String loginId,
-            @Valid @ModelAttribute ModifyRequest modifyRequest,
-            BindingResult bindingResult,
-            Model model){
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
-
-        // nickname 중복 체크
-        if(userService.checkNicknameDuplicate(modifyRequest.getNickname())) {
-            bindingResult.addError(new FieldError("registRequest", "nickname", "닉네임이 중복됩니다."));
-        }
-
-        if (bindingResult.hasErrors()){
-            model.addAttribute("modifyRequest", modifyRequest);
-            return "modify";
-        }
-
-        adminService.modify(modifyRequest);
-        return "redirect:/security-login";
-    }
-
     @PostMapping("/delete")
     public String delete(@RequestParam(required = true) String loginId, Model model) {
         model.addAttribute("loginType", "security-login");
@@ -111,12 +88,4 @@ public class AdminController {
 
         return "redirect:/security-login";
     }
-
-//    @GetMapping("/history")
-//    public String search(Model model){
-//        model.addAttribute("loginType", "security-login");
-//        model.addAttribute("pageName", "Security 로그인");
-//
-//        return "history";
-//    }
 }

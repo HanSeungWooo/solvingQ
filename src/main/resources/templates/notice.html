@@ -1,0 +1,185 @@
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="/static/js/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="/SmartEditor/js/service/HuskyEZCreator.js" charset="UTF-8"></script>
+    <title th:text="|${pageName}|">공지사항</title>
+</head>
+<body>
+    <h1><a th:href="|/${loginType}|">[[${pageName}]]</a></h1> <hr/>
+    <div sec:authorize="${hasAuthority('ADMIN')}">
+        <button type="button" id="registNotice">공지사항 작성</button>
+    </div>
+    <div>
+        <table>
+            <tr>
+                <th>게시물 번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>노출 여부</th>
+                <th>작성일</th>
+            </tr>
+            <tr>
+
+            </tr>
+        </table>
+    </div>
+
+    <!-- 공지사항 등록 팝업 start -->
+    <div class="popup popup-wrap" id="registerPop" style="display: none; width: 800px">
+        <h5>게시글 등록</h5>
+        <div style="display: inline-block">
+            <button type="button" id="btnRegist">등록</button>
+            <button type="button" id="btnClosePop">닫기</button>
+        </div>
+        <div id="registNoticeDiv">
+            <div>
+                <label th:for="title">제목 : </label>
+                <input type="text" id="title" name="title" class="essential" data-name="제목">
+            </div>
+            <div>
+                <input type="checkbox" id="showYn" name="showYn" data-name="공개 여부">
+                <label th:for="showYn">공개 여부</label>
+            </div>
+            <div>
+                <label th:for="writerId">작성자 : </label>
+                <input type="text" id="writerNickname" name="writerNickname" data-name="작성자" readonly="readonly" th:value="${writerNickname}">
+                <input type="hidden" id="writerId" name="writerId" class="essential" data-name="작성자" readonly="readonly" th:value="${writerId}">
+            </div>
+            <div>
+                <label th:for="regDate">작성일자 : </label>
+                <input type="text" id="regDt" name="regDt" data-name="작성일자" readonly="readonly" th:value="${regDt}">
+                <input type="hidden" id="regDate" name="regDate" class="essential" data-name="작성일자" readonly="readonly" th:value="${regDate}">
+            </div>
+            <br>
+            <div id="smarteditor">
+                <label for="editorTxt">내용</label><br/>
+                <textarea name="editorTxt" id="editorTxt"
+                    row="20" cols="10"
+                    placeholder="내용을 입력해주세요."
+                    style="width: 800px;">
+                </textarea>
+            </div>
+        </div>
+    </div>
+    <!-- 공지사항 등록 팝업 end -->
+</body>
+<script type="text/javascript">
+    let oEditors = [];
+    var isEdited = false;
+    var url = '';
+    var type = '';
+
+    $(document).ready(function(e){
+        $(document).off('click', '#btnClosePop').on('click', '#btnClosePop', function(){
+            $(this).closest('.popup').css('display', 'none');
+        });
+    });
+
+    smartEditor = function (){
+        console.log("Naver SmartEditor")
+        nhn.husky.EZCreator.createInIFrame({
+            oAppRef: oEditors,
+            elPlaceHolder: "editorTxt",
+            sSkinURI: "/SmartEditor/SmartEditor2Skin.html",
+            fCreator: "createSEditor2"
+        });
+    }
+
+    $('#registNotice').on('click', () => {
+        if ($('#registerPop').css('display') == 'none'){
+            if (!isEdited){
+                smartEditor();
+                isEdited = true;
+            }
+            $('#showYn').prop('checked', 'checked');
+            $('#registerPop').removeData();
+            $('#registerPop').show();
+        }
+    });
+
+    // 공지사항 팝업 등록 버튼 클릭
+    $('#btnRegist').on('click', () => {
+        if (confirm("등록하시겠습니까?")){
+            if(validation('registNoticeDiv')){
+                oEditors.getById['editorTxt'].exec('UPDATE_CONTENTS_FIELD', []); // 에디터에서 textarea로 내용 꺼내오기
+                var data = {
+                    "title": $('#title').val(),
+                    "content": $('#editorTxt').val(),
+                    "showYn": $('#showYn').is(':checked') ? 'Y' : 'N',
+                    "writerId": $('#writerId').val(),
+                    "regDate": $('#regDate').val()
+                }
+                url = '/security-login/api/admin/notice/regist';
+                type = 'post';
+
+                sendAjax(url, data, type);
+            }
+        }
+    });
+
+    function validation(divId){
+        var requiredInputs = $('#'+divId+' .essential');
+        var requiredRadio = $('#'+divId+' .essential-radio');
+        var isValid = true;
+        if (requiredInputs.length > 0){
+            $.each(requiredInputs, (idx, input) => {
+                if (input.value.trim() == ''){
+                    alert($('#'+input.id).data('name')+' 항목은 필수 입력 항목입니다.');
+                    isValid = false;
+                    return false;
+                }
+            });
+        }
+        if (requiredRadio.length > 0){
+            var radioNames = requiredRadio.toArray().map(radio => {return radio.name})
+            $.each(radioNames, (idx, name) => {
+                if ($('input[name='+name+']:checked').length == 0){
+                    alert($('input[name='+name+']').data('name') + ' 항목은 필수 선택 항목입니다.');
+                    isValid = false;
+                    return false;
+                }
+            })
+        }
+        return isValid;
+    }
+
+    function sendAjax(url, data, type){
+        $.ajax({
+            type: type,
+            url: url,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            success: function(data){
+                alert("공지사항이 정상적으로 등록되었습니다.");
+                location.reload();
+            },
+            error: function(request, status, error){
+                var result = request.responseJSON;
+                console.log(request, status, error);
+
+                alert(result.exMsg);
+            }
+        });
+    }
+</script>
+</html>
+
+<style>
+    .popup-wrap {
+        position: fixed;
+        min-width: 320px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 102;
+        border-radius: 8px;
+        color: #666666;
+        background: #fff;
+        text-align: center;
+        box-shadow: 0 0 13px rgba(0, 0, 0, 0.5);
+        font-size: 14px;
+    }
+</style>

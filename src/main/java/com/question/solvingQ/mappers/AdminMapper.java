@@ -1,6 +1,7 @@
 package com.question.solvingQ.mappers;
 
 import com.question.solvingQ.dto.ModifyRequest;
+import com.question.solvingQ.dto.NoticeRegistRequest;
 import com.question.solvingQ.dto.RegistRequest;
 import com.question.solvingQ.user.User;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,4 +14,5 @@ public interface AdminMapper {
     public void insertUser(RegistRequest registRequest);
     public void updateUser(ModifyRequest modifyRequest);
     public void deleteUser(String loginId);
+    public void insertNotice(NoticeRegistRequest noticeRegistRequest);
 }

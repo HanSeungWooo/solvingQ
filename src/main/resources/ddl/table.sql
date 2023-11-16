@@ -10,7 +10,12 @@ create table user(
     , role enum('USER', 'ADMIN') not null
 )
 
-
+create table notice(
+    notice_no int auto_increment primary key
+    , title varchar(255) not null
+    , content varchar(4000)
+    , show_yn char(1) default 'Y'
+)
 
 ----------------------------------------
 

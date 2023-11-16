@@ -29,4 +29,11 @@
         from user
         where login_id = #{loginId}
     </delete>
+
+    <insert id="insertNotice" parameterType="com.question.solvingQ.dto.NoticeRegistRequest">
+        insert into
+            notice(title, content, show_yn, writer_id, reg_date)
+        values
+            (#{title}, #{content}, #{showYn}, #{writerId}, TIMESTAMP(#{regDate}) )
+    </insert>
 </mapper>
