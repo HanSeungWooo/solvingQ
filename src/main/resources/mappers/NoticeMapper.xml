@@ -4,12 +4,12 @@
 
 <mapper namespace="com.question.solvingQ.mappers.NoticeMapper">
     <resultMap id="NoticeMap" type="com.question.solvingQ.notice.Notice">
-        <result column="notice_id" jdbcType="int" property="noticeId"></result>
-        <result column="title" jdbcType="varchar" property="title"></result>
-        <result column="content" jdbcType="varchar" property="content"></result>
-        <result column="show_yn" jdbcType="char" property="showYn"></result>
-        <result column="writer_id" jdbcType="varchar" property="writerId"></result>
-        <result column="reg_date" jdbcType="timestamp" property="regDate"></result>
+        <result column="notice_no" jdbcType="INTEGER" property="noticeNo"></result>
+        <result column="title" jdbcType="VARCHAR" property="title"></result>
+        <result column="content" jdbcType="VARCHAR" property="content"></result>
+        <result column="show_yn" jdbcType="CHAR" property="showYn"></result>
+        <result column="writer_id" jdbcType="VARCHAR" property="writerId"></result>
+        <result column="reg_date" jdbcType="TIMESTAMP" property="regDate"></result>
     </resultMap>
 
     <insert id="insertNotice" parameterType="com.question.solvingQ.dto.NoticeRegistRequest">
@@ -19,7 +19,7 @@
             (#{title}, #{content}, #{showYn}, #{writerId}, TIMESTAMP(#{regDate}) )
     </insert>
 
-    <select id="selectNoticeList" resultType="NoticeMap">
+    <select id="selectNoticeList" resultMap="NoticeMap">
         select
             *
         from
